@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setUser } from "./store/actions/rootActions";
+export const App = () => {
+  const rootState = useSelector((state) => state.rootStore);
+  const dispatch = useDispatch();
+  const [state, setState] = useState({ currUser: rootState.currUser });
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  useEffect(() => {
+    console.log(rootState.currUser);
+    dispatch(setUser(null));
+  }, []);
 
-export default App;
+  useEffect(() => {
+    console.log(rootState.currUser);
+    if(!rootState.currUser){
+      dispatch(setUser({name: 'Dor', color: 'red'}))
+    }
+  }, [state.currUser]);
+
+  return <div></div>;
+};
